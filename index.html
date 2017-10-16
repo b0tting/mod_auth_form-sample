@@ -2,7 +2,7 @@
 	<head>
 		<title>Login required</title>
 		<link href='http://fonts.googleapis.com/css?family=Roboto+Condensed:300' rel='stylesheet' type='text/css'>
-		<link rel="stylesheet" type="text/css" href="/login/css/style.css" />
+		<link rel="stylesheet" type="text/css" href="css/style.css" />
 		<script type="text/javascript">
 			function init() {
 				if (localStorage.getItem("tryLogin")) {
@@ -10,23 +10,36 @@
 					localStorage.removeItem("tryLogin");
 				}
 				document.getElementById("password").focus();
+
+				if(getRequestParam("target")) {
+				    form = document.getElementById("loginform")
+					form.action = getRequestParam("target")
+				}
 			}
 			
 			function tryLogin() {
 				localStorage.setItem("tryLogin", true);	
 			}
+
+            function getRequestParam(name){
+                if(name=(new RegExp('[?&]'+encodeURIComponent(name)+'=([^&]*)')).exec(location.search)) {
+                    return decodeURIComponent(name[1]);
+                }
+            }
+
+
 		</script>
 	</head>
 	<body onload="init()">
 		<div id="content">
 			<h1>Ah ah ah, you didn't say the magic word</h1>
-			<form method="POST" action="" onsubmit="tryLogin()">
+			<form method="POST" id="loginform" action="" onsubmit="tryLogin()">
 				<label for="username">Username</label><input type="text" id="username" name="httpd_username" value="friends" />
 				<label for="password">Password</label><input type="password" id="password" name="httpd_password" value="" />
 				<input type="submit" name="login" value="Login" />
 			</form>
 
-			<p id="error">Please! God damn it! I hate this hacker crap!</p>
+			<p id="error">Some error occurred on logging in. Were your password and username correct?</p>
 		</div>
 	</body>
 </html>
