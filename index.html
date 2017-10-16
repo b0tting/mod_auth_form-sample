@@ -15,6 +15,11 @@
 				    form = document.getElementById("loginform")
 					form.action = getRequestParam("target")
 				}
+
+				if(getRequestParam("title")) {
+					title = document.getElementById("title")
+					title.innerHTML = getRequestParam("title")
+				}
 			}
 			
 			function tryLogin() {
@@ -32,9 +37,9 @@
 	</head>
 	<body onload="init()">
 		<div id="content">
-			<h1>Ah ah ah, you didn't say the magic word</h1>
+			<h1><span id="title">Please enter your credentials</span></h1>
 			<form method="POST" id="loginform" action="" onsubmit="tryLogin()">
-				<label for="username">Username</label><input type="text" id="username" name="httpd_username" value="friends" />
+				<label for="username">Username</label><input type="text" id="username" name="httpd_username" />
 				<label for="password">Password</label><input type="password" id="password" name="httpd_password" value="" />
 				<input type="submit" name="login" value="Login" />
 			</form>
