@@ -76,6 +76,8 @@ input[type=submit] {
 }
 
 #error {
+	left : 50%;
+	top : 25%;
 	opacity : 0;
 	text-align : center;
 	background: linear-gradient(to bottom, #AA3514 0%, #A81420 100%) repeat scroll 0 0 rgba(0, 0, 0, 0);
