@@ -58,8 +58,8 @@ Ths example uses a centralized login form and redirects users to your given loca
         Require valid-user
         Satisfy Any
         
-        ProxyPass  http://192.168.51.18:8080/
-        ProxyPassReverse  http://192.168.51.18:8080
+        ProxyPass  http://192.168.1.2:8080/
+        ProxyPassReverse  http://192.168.1.2:8080
      </Location>
     </VirtualHost>
 ~
