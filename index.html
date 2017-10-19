@@ -46,7 +46,11 @@
                     document.getElementById("error").className += "show";
 				}
 
-				document.getElementById("password").focus();
+                if(document.getElementById("username").value) {
+                    document.getElementById("password").focus();
+                } else {
+                    document.getElementById("username").focus();
+				}
 
 				if(getRequestParam("target")) {
 				    var form = document.getElementById("loginform");
