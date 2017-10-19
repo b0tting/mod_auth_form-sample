@@ -62,8 +62,7 @@ Ths example uses a centralized login form and redirects users to your given loca
         ProxyPassReverse  http://192.168.1.2:8080
      </Location>
     </VirtualHost>
-~
-~
+
 
 
 

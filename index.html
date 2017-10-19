@@ -5,10 +5,20 @@
 		<link rel="stylesheet" type="text/css" href="css/style.css" />
 		<script type="text/javascript">
 			function init() {
-				if (sessionStorage["tryLogin"]) {
-					document.getElementById("error").className += "show";
+			    //Let's see if we have local storage. And if so, check if there was a login attempt
+				var showError = false;
+				if (typeof Storage !== "undefined" && sessionStorage["tryLogin"]) {
                     sessionStorage["tryLogin"] = false;
+                    showError = true;
+				// Maybe a session cookie then?
+                } else if(document.cookie.indexOf("tryLogin=true") > -1) {
+                    showError = true;
 				}
+
+				if(showError) {
+                    document.getElementById("error").className += "show";
+				}
+
 				document.getElementById("password").focus();
 
 				if(getRequestParam("target")) {
@@ -23,9 +33,14 @@
 			}
 			
 			function tryLogin() {
-                sessionStorage["tryLogin"] = true;
+                if (typeof Storage !== "undefined") {
+                    sessionStorage["tryLogin"] = true;
+                } else {
+                    document.cookie = "tryLogin=true; expires=0"
+				}
 			}
 
+			// This great onliner was lifted from stackoverflow
             function getRequestParam(name){
                 if(name=(new RegExp('[?&]'+encodeURIComponent(name)+'=([^&]*)')).exec(location.search)) {
                     return decodeURIComponent(name[1]);
