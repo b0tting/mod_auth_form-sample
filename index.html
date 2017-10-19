@@ -5,9 +5,9 @@
 		<link rel="stylesheet" type="text/css" href="css/style.css" />
 		<script type="text/javascript">
 			function init() {
-				if (localStorage.getItem("tryLogin")) {
+				if (sessionStorage["tryLogin"]) {
 					document.getElementById("error").className += "show";
-					localStorage.removeItem("tryLogin");
+                    sessionStorage["tryLogin"] = false;
 				}
 				document.getElementById("password").focus();
 
@@ -23,7 +23,7 @@
 			}
 			
 			function tryLogin() {
-				localStorage.setItem("tryLogin", true);	
+                sessionStorage["tryLogin"] = true;
 			}
 
             function getRequestParam(name){
