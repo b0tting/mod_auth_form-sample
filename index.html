@@ -61,9 +61,9 @@
 			
 			function tryLogin() {
                 if (typeof Storage !== "undefined") {
-                    sessionStorage["tryLogin"] = document.getElementById("username");
+                    sessionStorage["tryLogin"] = document.getElementById("username").value;
                 } else {
-                    document.cookie = "tryLogin=" + document.getElementById("username") + "; expires=0"
+                    document.cookie = "tryLogin=" + document.getElementById("username").value + "; expires=0"
                 }
             }
 
