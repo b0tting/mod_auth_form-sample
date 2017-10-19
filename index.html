@@ -4,14 +4,41 @@
 		<link href='http://fonts.googleapis.com/css?family=Roboto+Condensed:300' rel='stylesheet' type='text/css'>
 		<link rel="stylesheet" type="text/css" href="css/style.css" />
 		<script type="text/javascript">
-			function init() {
+            function getCookieValue(cookieName) {
+                var value = false;
+                if (document.cookie.length > 0) {
+                    var cookie_start = document.cookie.indexOf(cookieName + "=");
+                    if (cookie_start != -1) {
+                        cookie_start = cookie_start + cookieName.length + 1;
+                        var cookie_end = document.cookie.indexOf(";", cookie_start);
+                        if (cookie_end == -1) {
+                            cookie_end = document.cookie.length;
+                        }
+                        value = document.cookie.substring(cookie_start, cookie_end);
+                    }
+                }
+                return value;
+            }
+
+            // This great onliner was lifted from stackoverflow
+            function getRequestParam(name){
+                if(name=(new RegExp('[?&]'+encodeURIComponent(name)+'=([^&]*)')).exec(location.search)) {
+                    return decodeURIComponent(name[1]);
+                }
+            }
+
+
+            function init() {
 			    //Let's see if we have local storage. And if so, check if there was a login attempt
 				var showError = false;
+                var usernameField = document.getElementById("username")
 				if (typeof Storage !== "undefined" && sessionStorage["tryLogin"]) {
+                    usernameField.value = sessionStorage["tryLogin"];
                     sessionStorage["tryLogin"] = false;
                     showError = true;
 				// Maybe a session cookie then?
-                } else if(document.cookie.indexOf("tryLogin=true") > -1) {
+                } else if(document.cookie.indexOf("tryLogin=") > -1) {
+                    usernameField.value = getCookieValue("trylogin");
                     showError = true;
 				}
 
@@ -22,7 +49,7 @@
 				document.getElementById("password").focus();
 
 				if(getRequestParam("target")) {
-				    form = document.getElementById("loginform")
+				    var form = document.getElementById("loginform");
 					form.action = getRequestParam("target")
 				}
 
@@ -36,17 +63,9 @@
                 if (typeof Storage !== "undefined") {
                     sessionStorage["tryLogin"] = true;
                 } else {
-                    document.cookie = "tryLogin=true; expires=0"
-				}
-			}
-
-			// This great onliner was lifted from stackoverflow
-            function getRequestParam(name){
-                if(name=(new RegExp('[?&]'+encodeURIComponent(name)+'=([^&]*)')).exec(location.search)) {
-                    return decodeURIComponent(name[1]);
+                    document.cookie = "tryLogin=" + document.getElementById("username") + "; expires=0"
                 }
             }
-
 
 		</script>
 	</head>
